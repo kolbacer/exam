@@ -13,7 +13,7 @@ template<typename T, int size>
 class Buffer
 {
 public:
-	Buffer() :m_size(size), cur(0), ar(size) {};
+	Buffer() :m_size(size), cur(0), ar(size), real_index(-1) {};
 	~Buffer() {};
 
 	void addElem(T val)
@@ -21,6 +21,7 @@ public:
 		index = cur % m_size;
 		ar[index] = val;
 		++cur;
+		if (real_index < size - 1) ++real_index;
 	}
 
 	T getElem()
@@ -36,13 +37,14 @@ public:
 
 	bool delElem()
 	{
-		if (cur == 0)
+		if (real_index < 0)
 		{
 			cout << endl << "Haven't elements" << endl;
 			return false;
 		}
 		else
 		{
+			--real_index;
 			--cur;
 			if (cur != 0)
 				index = (cur - 1) % m_size;
@@ -56,6 +58,7 @@ private:
 	int m_size;
 	int cur;
 	int index;
+	int real_index;
 	Storage<T> ar;
 };
 
@@ -90,8 +93,25 @@ bool test2()
 	return ((a == 3) && (b == 2));
 }
 
+bool test3()
+{
+	Buffer<int, 2> buf;
+	buf.addElem(1);
+	buf.addElem(2);
+	buf.addElem(3);
+
+	bool a, b;
+
+	buf.delElem();
+	a = buf.delElem();
+	b = buf.delElem();
+
+	return (a && !b);
+}
+
 int main()
 {
 	cout << (test1() ? "TRUE" : "FALSE") << endl;
 	cout << (test2() ? "TRUE" : "FALSE") << endl;
+	cout << (test3() ? "TRUE" : "FALSE") << endl;
 }
