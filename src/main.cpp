@@ -74,7 +74,7 @@ bool test1()
 	buf.delElem();
 	b = buf.getElem();
 	
-	return ((a == 28) && (b == 15));
+	return ((a == 28) && (b == 15));  //принцип стека
 }
 
 bool test2()
@@ -90,7 +90,7 @@ bool test2()
 	buf.delElem();
 	b = buf.getElem();
 
-	return ((a == 3) && (b == 2));
+	return ((a == 3) && (b == 2)); //хоть и превысил размер буффера, но смог достать последние 2 элемента
 }
 
 bool test3()
@@ -106,7 +106,7 @@ bool test3()
 	a = buf.delElem();
 	b = buf.delElem();
 
-	return (a && !b);
+	return (a && !b);  // смог достать 2, но 1 уже потерялась
 }
 
 int main()
